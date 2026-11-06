@@ -1,0 +1,652 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Tiny Question for You ♡</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --pink:#ed3193;
+  --hot:#d91678;
+  --ink:#211522;
+}
+
+* {box-sizing:border-box}
+
+body {
+  margin:0;
+  min-height:100vh;
+  font-family:Nunito,sans-serif;
+  text-align:center;
+  color:var(--ink);
+  background-color:#fffafd;
+  background-image:
+    linear-gradient(#ed31930b 1px,transparent 1px),
+    linear-gradient(90deg,#ed31930b 1px,transparent 1px);
+  background-size:18px 18px;
+  overflow-x:hidden;
+}
+
+.topbar {
+  height:75px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 5%;
+}
+
+.brand {font-size:30px;font-weight:900}
+.nav {font-weight:800;font-size:13px;word-spacing:18px}
+
+.top-cta {
+  background:var(--pink);
+  color:white;
+  border:0;
+  padding:13px 20px;
+  border-radius:5px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+main {max-width:1100px;margin:auto;padding:15px}
+
+.hero-title {
+  font-family:"Press Start 2P",monospace;
+  font-size:clamp(24px,5vw,53px);
+  line-height:1.5;
+  text-shadow:3px 3px #f8c7df;
+}
+
+.subtitle {font-weight:800;line-height:1.6}
+
+.stage {
+  height:260px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+
+.ghost {
+  width:170px;
+  height:176px;
+  position:relative;
+  animation:bob 2.4s infinite ease-in-out;
+  filter:drop-shadow(5px 6px 0 #26152a);
+}
+
+.ghost.waving {animation:waveHello 1s ease-in-out 2,bob 2.4s 2s infinite}
+
+.ghost-body {
+  position:absolute;
+  inset:0;
+  background:#fff4fa;
+  border:7px solid var(--ink);
+  clip-path:polygon(25% 0,75% 0,88% 13%,96% 35%,96% 74%,85% 83%,74% 78%,62% 88%,50% 81%,38% 89%,25% 80%,14% 86%,4% 75%,4% 35%,12% 13%);
+}
+
+.ghost-face {
+  position:absolute;
+  top:55px;
+  left:42px;
+  display:flex;
+  gap:27px;
+}
+
+.eye {
+  width:23px;
+  height:31px;
+  background:var(--ink);
+  border-radius:50%;
+  position:relative;
+  transition:.3s;
+}
+
+.eye:after {
+  content:"";
+  position:absolute;
+  top:5px;
+  left:5px;
+  width:8px;
+  height:9px;
+  background:white;
+  border-radius:50%;
+}
+
+.cheek {
+  position:absolute;
+  top:99px;
+  width:19px;
+  height:9px;
+  background:#f28dbd;
+  transition:.3s;
+}
+
+.cheek.left {left:28px}
+.cheek.right {right:28px}
+
+.ghost-mouth {
+  position:absolute;
+  top:105px;
+  left:76px;
+  width:18px;
+  height:9px;
+  border-bottom:3px solid var(--ink);
+  border-radius:50%;
+  transition:.3s;
+}
+
+.ghost.happy .ghost-mouth,
+.ghost.blushing .ghost-mouth {
+  width:25px;
+  height:14px;
+  left:73px;
+  border:3px solid var(--ink);
+  border-top:0;
+  border-radius:0 0 15px 15px;
+}
+
+.ghost.happy .cheek {background:#ff80b5;width:23px;height:12px}
+
+.ghost.sad .ghost-mouth {
+  top:112px;
+  height:12px;
+  border-bottom:0;
+  border-top:3px solid var(--ink);
+}
+
+.ghost.nervous .ghost-mouth {
+  width:13px;
+  height:13px;
+  left:78px;
+  border:3px solid var(--ink);
+  border-radius:50%;
+}
+
+.ghost.nervous .eye {transform:scale(1.15)}
+.ghost.blushing .cheek {background:#ff4f9c;width:27px;height:15px}
+
+.cloud {
+  position:absolute;
+  width:110px;
+  height:28px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 4px #f6c8df;
+}
+
+.cloud:before,.cloud:after {
+  content:"";
+  position:absolute;
+  background:white;
+  border-radius:50%;
+}
+
+.cloud:before {width:42px;height:42px;left:20px;bottom:0}
+.cloud:after {width:53px;height:53px;right:15px;bottom:0}
+
+.cloud.left {left:3%;top:70px}
+.cloud.right {right:3%;top:35px}
+
+.spark {
+  position:absolute;
+  color:var(--pink);
+  font-size:28px;
+  animation:twinkle 1.5s infinite;
+}
+
+.s1 {left:20%;top:40px}
+.s2 {right:20%;top:50px}
+.s3 {left:30%;bottom:40px}
+
+.bubble {
+  position:absolute;
+  right:24%;
+  top:10px;
+  border:3px solid var(--pink);
+  padding:9px;
+  border-radius:12px;
+  color:var(--pink);
+  background:white;
+}
+
+.landscape {
+  height:85px;
+  background:repeating-linear-gradient(0deg,#ed3193 0 10px,#d91678 10px 16px);
+  border-top:6px solid #f49bc7;
+  clip-path:polygon(0 20%,10% 0,20% 15%,30% 5%,40% 20%,50% 0,60% 18%,70% 4%,80% 20%,90% 0,100% 15%,100% 100%,0 100%);
+}
+
+.question-wrap {max-width:760px;margin:30px auto 50px}
+
+.question-card {
+  background:white;
+  border:3px solid #ed80b4;
+  border-radius:18px;
+  padding:30px 20px;
+  min-height:260px;
+  box-shadow:0 8px #f7c3dc,0 15px 35px #97316619;
+}
+
+.eyebrow {
+  font-family:"Press Start 2P",monospace;
+  font-size:10px;
+  color:var(--pink);
+  line-height:2;
+}
+
+.question {
+  font-family:"Press Start 2P",monospace;
+  font-size:clamp(14px,2.5vw,20px);
+  line-height:1.9;
+  margin:20px auto;
+}
+
+.hint {color:#8d6d80;font-weight:800;line-height:1.6}
+
+.actions {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:25px;
+  min-height:56px;
+}
+
+.pixel-btn {
+  border:0;
+  border-radius:7px;
+  padding:14px 30px;
+  font:800 15px Nunito,sans-serif;
+  cursor:pointer;
+  transition:transform .3s,opacity .3s;
+  min-width:112px;
+  box-shadow:0 5px #a90d5b;
+}
+
+.yes {background:var(--pink);color:white}
+.no {background:#ffe1ef;color:#a32b68;box-shadow:0 5px #e6a5c6}
+
+.feedback {
+  color:#cf287e;
+  font-weight:900;
+  min-height:27px;
+  margin-top:17px;
+}
+
+.next {
+  display:none;
+  margin:15px auto;
+  background:#241624;
+  color:white;
+  border:0;
+  padding:13px 20px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.result {display:none;animation:pop .4s ease}
+.result h2 {
+  font-family:"Press Start 2P",monospace;
+  font-size:clamp(16px,3vw,23px);
+  line-height:1.9;
+}
+
+.big-heart {font-size:55px;animation:bob 1.5s infinite}
+
+.insta {
+  display:inline-block;
+  background:var(--pink);
+  color:white;
+  text-decoration:none;
+  padding:15px 22px;
+  border-radius:7px;
+  font-weight:900;
+  box-shadow:0 5px #a90d5b;
+  margin-top:12px;
+}
+
+.insta-handle {color:#bd2874;font-weight:900}
+
+.bottom-label {
+  color:var(--pink);
+  font:9px "Press Start 2P",monospace;
+  line-height:2;
+  margin:25px 0;
+}
+
+.footer {
+  background:var(--pink);
+  color:white;
+  padding:25px;
+  font-weight:800;
+}
+
+.float {
+  position:fixed;
+  bottom:-35px;
+  color:var(--pink);
+  pointer-events:none;
+  animation:rise linear forwards;
+}
+
+.heart-burst {
+  position:fixed;
+  left:50%;
+  top:50%;
+  z-index:30;
+  pointer-events:none;
+  animation:burst 1.2s ease-out forwards;
+}
+
+@keyframes bob {
+  0%,100% {translate:0 0}
+  50% {translate:0 -10px}
+}
+
+@keyframes waveHello {
+  0%,100% {rotate:0}
+  25% {rotate:8deg}
+  50% {rotate:-7deg}
+  75% {rotate:5deg}
+}
+
+@keyframes twinkle {
+  50% {opacity:.3;scale:.7}
+}
+
+@keyframes rise {
+  to {transform:translateY(-115vh);opacity:0}
+}
+
+@keyframes pop {
+  from {opacity:0;scale:.9}
+  to {opacity:1;scale:1}
+}
+
+@keyframes burst {
+  to {opacity:0;translate:var(--dx) var(--dy);scale:1.5}
+}
+
+@media(max-width:600px) {
+  .nav {display:none}
+  .stage {height:220px}
+  .ghost {scale:.84}
+  .cloud.left {left:-8%}
+  .cloud.right {right:-8%}
+  .bubble {right:8%}
+  .question-card {padding:24px 16px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">💗 little♡thing</div>
+  <nav class="nav">JUST FOR YOU　 ♡　 A TINY SURPRISE</nav>
+  <button class="top-cta" onclick="document.getElementById('questionCard').scrollIntoView({behavior:'smooth'})">Let's go →</button>
+</header>
+
+<main>
+
+<h1 class="hero-title">A tiny question.<br>A big feeling.</h1>
+
+<p class="subtitle">
+A little something made just for you.<br>
+Answer honestly… or at least cutely. ♡
+</p>
+
+<section class="stage">
+
+<div class="cloud left"></div>
+<div class="cloud right"></div>
+<span class="spark s1">✦</span>
+<span class="spark s2">✧</span>
+<span class="spark s3">♥</span>
+<div class="bubble">♡</div>
+
+<div class="ghost waving" id="ghost">
+  <div class="ghost-body"></div>
+  <div class="ghost-face">
+    <span class="eye"></span>
+    <span class="eye"></span>
+  </div>
+  <span class="cheek left"></span>
+  <span class="cheek right"></span>
+  <span class="ghost-mouth"></span>
+</div>
+
+</section>
+
+<div class="landscape"></div>
+
+<section class="question-wrap" id="questionCard">
+<div class="question-card">
+
+<div class="eyebrow" id="eyebrow">♡ LEVEL 01 — WARM UP</div>
+
+<section id="firstQuestion">
+
+<h2 class="question">
+Do you know we're making this stupid thing for you?
+</h2>
+
+<p class="hint">Be honest. The little ghost is watching. 👀</p>
+
+<div class="actions">
+<button class="pixel-btn yes" onclick="firstAnswer('yes')">YES ♡</button>
+<button class="pixel-btn no" onclick="firstAnswer('no')">NO</button>
+</div>
+
+<p class="feedback" id="feedback"></p>
+
+<button class="next" id="nextButton" onclick="showSecond()">
+Okay, let's come to the point →
+</button>
+
+</section>
+
+<section id="secondQuestion" hidden>
+
+<h2 class="question">
+Do you love me? Do you have feelings for me?
+</h2>
+
+<p class="hint">No pressure. Just tell me what's in your heart. 💗</p>
+
+<div class="actions">
+<button class="pixel-btn yes" id="yesButton" onclick="sayYes()">YES ♡</button>
+<button class="pixel-btn no" id="noButton" onclick="sayNo()">NO</button>
+</div>
+
+<p class="feedback" id="secondFeedback"></p>
+
+</section>
+
+<section class="result" id="result">
+
+<div class="big-heart">💗</div>
+<h2>Thanks for being honest.</h2>
+
+<p class="hint">
+If you'd like to talk, here's where you can find me. ♡
+</p>
+
+<a class="insta"
+href="https://www.instagram.com/blazer__8909/"
+target="_blank" rel="noopener noreferrer">
+Message me on Instagram ↗
+</a>
+
+<p class="insta-handle">@blazer__8909</p>
+
+</section>
+
+</div>
+
+<div class="bottom-label">
+MADE WITH A LITTLE BIT OF COURAGE & LOTS OF PINK
+</div>
+
+</section>
+</main>
+
+<footer class="footer">
+♡ A SMALL INTERNET CORNER, JUST FOR YOU ♡
+<p>One tiny page. One honest answer. That's all. ✨</p>
+</footer>
+
+<script>
+
+let noClicks = 0;
+
+function changeGhostMood(mood) {
+  const ghost = document.getElementById('ghost');
+
+  ghost.classList.remove('happy','sad','nervous','blushing');
+
+  if(mood) ghost.classList.add(mood);
+}
+
+function firstAnswer(answer) {
+
+  const feedback = document.getElementById('feedback');
+
+  if(answer === 'yes') {
+    feedback.textContent = 'Of course you do! 😌💕';
+    changeGhostMood('happy');
+  } else {
+    feedback.textContent =
+      'How can you say that? It hurt my feelings, theek hai? 🥺';
+    changeGhostMood('sad');
+  }
+
+  document.getElementById('nextButton').style.display = 'inline-block';
+}
+
+function showSecond() {
+
+  document.getElementById('firstQuestion').hidden = true;
+  document.getElementById('secondQuestion').hidden = false;
+
+  document.getElementById('eyebrow').textContent =
+    '♡ LEVEL 02 — THE BIG QUESTION';
+
+  changeGhostMood('');
+
+  document.getElementById('questionCard').scrollIntoView({
+    behavior:'smooth',
+    block:'center'
+  });
+}
+
+function sayNo() {
+
+  noClicks++;
+
+  const no = document.getElementById('noButton');
+  const yes = document.getElementById('yesButton');
+
+  changeGhostMood('nervous');
+
+  if(noClicks === 1) {
+
+    no.style.transform = 'scale(.58)';
+    no.style.opacity = '.7';
+
+    yes.style.transform = 'scale(1.22)';
+
+    document.getElementById('secondFeedback').textContent =
+      'Hmm… are you sure? 😳';
+
+  } else {
+
+    no.style.display = 'none';
+
+    document.getElementById('secondFeedback').textContent =
+      'The big pink button is right there. No pressure though. 💗';
+
+    yes.style.position = 'fixed';
+    yes.style.inset = '0';
+    yes.style.width = '100vw';
+    yes.style.height = '100dvh';
+    yes.style.borderRadius = '0';
+    yes.style.zIndex = '20';
+    yes.style.fontSize = 'clamp(28px,7vw,52px)';
+    yes.style.transform = 'none';
+    yes.style.boxShadow = 'none';
+  }
+}
+
+function heartBurst() {
+
+  const icons = ['💗','💕','♥','✦','♡','💖'];
+
+  for(let i=0;i<24;i++) {
+
+    const heart = document.createElement('span');
+    heart.className = 'heart-burst';
+
+    heart.textContent =
+      icons[Math.floor(Math.random()*icons.length)];
+
+    const angle = Math.random()*Math.PI*2;
+    const distance = 90 + Math.random()*180;
+
+    heart.style.setProperty('--dx',Math.cos(angle)*distance+'px');
+    heart.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>heart.remove(),1300);
+  }
+}
+
+function sayYes() {
+
+  changeGhostMood('blushing');
+  heartBurst();
+
+  document.getElementById('secondQuestion').hidden = true;
+
+  document.getElementById('eyebrow').textContent =
+    '♡ THANK YOU FOR PLAYING';
+
+  document.getElementById('result').style.display = 'block';
+
+  document.getElementById('questionCard').scrollIntoView({
+    behavior:'smooth',
+    block:'center'
+  });
+}
+
+const symbols = ['♥','✦','♡','✧'];
+
+function makeFloat() {
+
+  const item = document.createElement('span');
+
+  item.className = 'float';
+
+  item.textContent =
+    symbols[Math.floor(Math.random()*symbols.length)];
+
+  item.style.left = Math.random()*100+'vw';
+  item.style.fontSize = (12+Math.random()*15)+'px';
+  item.style.animationDuration = (7+Math.random()*5)+'s';
+
+  document.body.appendChild(item);
+
+  setTimeout(()=>item.remove(),12500);
+}
+
+setInterval(makeFloat,1100);
+
+</script>
+</body>
+</html>
